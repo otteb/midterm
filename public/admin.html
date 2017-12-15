@@ -3,20 +3,27 @@
 <title>Admin</title>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+<link href="./stylesheets/style.css" rel="stylesheet">
   <script src="javascripts/app.js"></script>
 </head>
-<body  ng-app="voting" ng-controller="MainCtrl">
-<div style="margin-left: 5em;">
+<body  ng-app="store" ng-controller="MainCtrl">
+<div>
 <h1> Administrative Interface </h1>
-<form ng-submit="addCandidate()">
-  <input type="text" ng-model="formContent"></input>
-    <button type="submit">Add Candidate</button>
+<form class="formInputs"  ng-submit="addProduct()">
+  Product Name:<input type="text" ng-model="formContent"></input>
+  Product Picture url:<input type="text" ng-model="formPic"></input>
+  Product Price:<input type="text" ng-model="formPrice"></input>
+    <button type="submit">Add Product</button>
 </form>
 
-<h1>Current Candidates</h1>
-<div ng-repeat="candidate in candidates | orderBy:['-votes','Name']">
-<span class="glyphicon glyphicon-remove" ng-click="delete(candidate)"></span>
-  {{candidate.Name}} - votes {{candidate.votes}}
+<h1 id="current-orders">Current Orders</h1>
+<div class="inventory">
+<div class="inventory-item"  ng-repeat="product in products | orderBy:['-orders','Name']">
+<span class="glyphicon glyphicon-remove" ng-click="delete(product)"></span>
+ <p id="product-name"> {{product.Name}} - orders {{product.orders}}</p>
+ <img id="product-picture"  ng-src="{{product.picture}}" alt="picture" height="200" width="200"/>
+ <p id="product-price">price:  {{product.price}}</p>
+</div>
 </div>
 </body>
 </html>

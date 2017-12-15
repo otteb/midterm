@@ -1,49 +1,49 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var Candidate = mongoose.model('Candidate');
+var Product = mongoose.model('Product');
 
-router.get('/voting', function(req, res, next) {
-  Candidate.find(function(err, candidates){
+router.get('/ordering', function(req, res, next) {
+  Product.find(function(err, products){
     if(err){ return next(err); }
-    res.json(candidates);
+    res.json(products);
   });
 });
 
-router.post('/voting', function(req, res, next) {
-  var candidate = new Candidate(req.body);
-  candidate.save(function(err, candidate){
+router.post('/ordering', function(req, res, next) {
+  var product = new Product(req.body);
+  product.save(function(err, product){
     if(err){ return next(err); }
-    res.json(candidate);
+    res.json(product);
   });
 });
 
-router.param('candidate', function(req, res, next, id) {
-  var query = Candidate.findById(id);
-  query.exec(function (err, candidate){
+router.param('product', function(req, res, next, id) {
+  var query = Product.findById(id);
+  query.exec(function (err, product){
     if (err) { return next(err); }
-    if (!candidate) { return next(new Error("can't find candidate")); }
-    req.candidate = candidate;
+    if (!product) { return next(new Error("can't find product")); }
+    req.product = product;
     return next();
   });
 });
 
-router.get('/voting/:candidate', function(req, res) {
-  res.json(req.candidate);
+router.get('/ordering/:product', function(req, res) {
+  res.json(req.product);
 });
 
 //:comment calls the middleware (router.param)
-router.put('/voting/:candidate/upvote', function(req, res, next) {
-  req.candidate.upvote(function(err, candidate){
+router.put('/ordering/:product/order', function(req, res, next) {
+  req.product.upvote(function(err, product){
     if (err) { return next(err); }
-    res.json(candidate);
+    res.json(product);
   });
 });
 
-router.delete('/voting/:candidate', function(req, res) {
+router.delete('/ordering/:product', function(req, res) {
   console.log("in Delete");
-  req.candidate.remove();
-  res.json(req.candidate);
+  req.product.remove();
+  res.json(req.product);
 });
 module.exports = router;
 

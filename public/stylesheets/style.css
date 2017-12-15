@@ -1,8 +1,55 @@
 body {
   padding: 50px;
+  color: white;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url("https://is2-ssl.mzstatic.com/image/thumb/Purple2/v4/1d/2c/a7/1d2ca744-2ab0-ac43-e48d-308e12efa16b/source/512x512bb.jpg");
 }
-
+h1{
+	text-align: center;
+	margin-bottom: 2em;
+}
 a {
   color: #00B7FF;
+}
+.formInputs{
+	display: flex;
+	justify-content:space-around;
+}
+button{
+	color: blue;
+}
+button:hover{
+	color: red;
+	background: black;
+}
+#current-orders{
+	margin-top: 2em;
+}
+.inventory{
+	display: flex;
+    justify-content: center;
+    flex-direction: column-reverse;
+    align-items: center;
+}
+.inventory-item{
+	width: 35vw;
+	display: flex;
+	flex-direction:row;
+	justify-content: space-around;
+	align-items: center;
+	margin-bottom: 2em;
+	background:#B5D18B;
+	border-radius: 30px;
+}
+#product-picture{
+	width 50px;
+	height 50px;
+	border-radius: 10px;
+}
+.customer-inputs{
+	width: 2wv;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	margin-bottom: 2em;
 }

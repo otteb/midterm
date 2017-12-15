@@ -1,57 +1,57 @@
-angular.module('voting',[])
+angular.module('store',[])
 .controller('MainCtrl',[
   '$scope','$http',
   function($scope,$http) {
-    $scope.candidates = [];
-    $scope.ballot = [];
+    $scope.products = [];
+    $scope.inventory = [];
     $scope.getAll = function() {
-	return $http.get('/voting').success(function(data){
-		angular.copy(data, $scope.candidates);
+	return $http.get('/ordering').success(function(data){
+		angular.copy(data, $scope.products);
 	});
     };
 
     $scope.getAll();
 
-    $scope.create = function(candidate) {
-	console.log(candidate);
-		return $http.post('/voting', candidate).success(function(data){
-			$scope.candidates.push(data);
+    $scope.create = function(product) {
+	console.log(product);
+		return $http.post('/ordering', product).success(function(data){
+			$scope.products.push(data);
 		});
     };
 
     $scope.dovote = function() {
       console.log("In Dovote");
-      angular.forEach($scope.candidates, function(value,key) {
+      angular.forEach($scope.products, function(value,key) {
         if(value.selected) {
           $scope.upvote(value);
-          $scope.ballot.push(value);
+          $scope.inventory.push(value);
         }
       });
     }
 
-    $scope.upvote = function(candidate) {
-      return $http.put('/voting/' + candidate._id + '/upvote')
+    $scope.upvote = function(product) {
+      return $http.put('/ordering/' + product._id + '/order')
         .success(function(data){
           console.log("upvote worked");
-          candidate.upvotes += 1;
+          products.upvotes += 1;
         });
     };
 
-    $scope.addCandidate = function(){ 
+    $scope.addProduct = function(){ 
 	console.log($scope.formContent);
-      var newObj = {Name:$scope.formContent,votes:0};
+      var newObj = {Name:$scope.formContent,picture:$scope.formPic,price:$scope.formPrice,orders:0};
       console.log(newObj);
       $scope.create(newObj);
       $scope.formContent = '';
     }
 
-    $scope.incrementUpvotes = function(candidate) {
-      $scope.upvote(candidate);
+    $scope.incrementUpvotes = function(product) {
+      $scope.upvote(product);
     };
 
-    $scope.delete = function(candidate) {
-      console.log("Deleting Name "+candidate.Name+" ID "+candidate._id);
-      $http.delete('/voting/'+candidate._id)
+    $scope.delete = function(product) {
+      console.log("Deleting Name "+product.Name+" ID "+product._id);
+      $http.delete('/ordering/' + product._id)
         .success(function(data){
           console.log("delete worked");
       });
